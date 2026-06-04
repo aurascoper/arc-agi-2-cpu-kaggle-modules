@@ -3,12 +3,15 @@
 Use this prompt in Claude.ai with Deep Research enabled.
 
 ```text
-You are helping me improve an ARC-AGI-2 Kaggle submission. I want an evidence-grounded plan for private-leaderboard progress under Kaggle L4x4 GPU constraints. Start by falsifying or confirming whether "49+" is a real Kaggle-legal ARC-AGI-2 private target; do not assume it is.
+You are helping me improve an ARC-AGI-2 Kaggle submission. I want an evidence-grounded plan for leaderboard progress under Kaggle L4x4 GPU constraints. A current live Kaggle leaderboard row reports first place at 49.17 (`nvbanana`, 2026-06-04), so the key question is no longer whether a 49+ live score exists. The key question is what mechanism produced it, whether it is public/reproducible/Kaggle-legal, and whether it is likely to transfer to final private scoring.
 
 Context and constraints:
 - Current known working transfer baseline: ARC_2026D-style Qwen test-time training (TTT), reported score 30.14.
-- Crucial uncertainty: 30.14 is almost certainly a 2026 public/semi-private live-LB score, not a final private score, because the 2025 ARC-AGI-2 private record was about 24% (NVARC). Treat score identity as Stage 0 to disambiguate before optimizing to that number.
-- Known hard fact to verify from primary sources: the ARC Prize 2025 technical report says the top ARC-AGI-2 private score reached 24%, and the official ARC Prize 2025 page lists NVARC at 24.0% on ARC-AGI-2 Private Evaluation.
+- Crucial score-identity distinction: 30.14/30.12 and 49.17 are live Kaggle leaderboard scores unless proven otherwise. The 2025 ARC-AGI-2 final private record was about 24% (NVARC), while the 2026 live leaderboard can be much higher. Do not conflate live public/semi-private LB with final private score.
+- Known hard facts to verify from primary sources:
+  - the ARC Prize 2025 technical report says the top ARC-AGI-2 private score reached 24%;
+  - the official ARC Prize 2025 page lists NVARC at 24.0% on ARC-AGI-2 Private Evaluation;
+  - current Kaggle live leaderboard shows `nvbanana` at 49.17 as of 2026-06-04.
 - Hardware target: Kaggle L4x4, 12-hour notebook limit, no internet during rerun except attached datasets/models.
 - CPU symbolic engine is a dead end for leading score. It emitted 259 non-default hidden predictions with 0 errors but scored 0.00 hidden. Diagnose it as public-eval overfit / non-transfer, not a compute problem.
 - Do not propose hidden-label leakage, public-eval task memorization, task-ID lookup, or competition-rule violations.
@@ -23,10 +26,10 @@ Known ARC_2026D/Qwen-TTT mechanism:
 - Current caution: multi-seed TTT ensembling is probably low ROI under 12h; do not recommend it ahead of data/SFT, selection/voting, decode speedups, or LoRA right-sizing unless you have concrete evidence.
 
 Your task:
-1. Stage 0: determine what the reported 30.14 likely is: public/semi-private live LB vs private/final score. Explain how Kaggle/ARC Prize reporting splits public, semi-private, and private scores in 2025-2026.
-2. Deep-research the current public ARC-AGI-2 / ARC Prize 2025-2026 state of the art, especially Kaggle-legal notebooks/writeups. Separate private-LB evidence from public/semi-private or API/unconstrained results.
-3. Identify whether "49+" corresponds to a real ARC-AGI-2 Kaggle-private entry/notebook/recipe. If yes, reverse-engineer the mechanism: base model, synthetic data, TTT recipe, decoding, ensembling, runtime budget, and packaging. If no, say so plainly and name the category error (ARC-AGI-1, semi-private, API/unconstrained, etc.).
-4. If no credible 49+ private recipe exists, give the most realistic path to private-LB gains: likely high-20s/low-30s frontier first, not "49 by knob tuning."
+1. Stage 0: explain how Kaggle/ARC Prize reporting splits live public/semi-private and final private scores in 2025-2026. State what can and cannot be inferred from a live 49.17 score.
+2. Deep-research the current public ARC-AGI-2 / ARC Prize 2025-2026 state of the art, especially Kaggle-legal notebooks/writeups and any discussion, code, dataset, or kernel tied to `nvbanana` or the 49.17 live score.
+3. Identify whether the 49.17 live score has a public/reproducible recipe. If yes, reverse-engineer the mechanism: base model, synthetic data, TTT recipe, decoding, ensembling, runtime budget, and packaging. If no, say what evidence is missing and what can still be inferred from neighboring public solutions.
+4. Distinguish live-LB gain from final-private gain. If 49.17 is only live/semi-private evidence, estimate private-transfer risk and the likely failure modes.
 5. Prioritize interventions by expected private-LB gain per L4x4 runtime risk:
    - NVARC/open synthetic-data SFT and base checkpoint
    - product-of-experts / AIRV-style selection and eval augmentation
@@ -49,10 +52,10 @@ Your task:
    - speculation
    - contamination/leakage risk
 8. Final output format:
-   - Executive verdict: is 49+ private realistic with Kaggle L4x4 only?
-   - Score identity verdict: what is 30.14 most likely measuring, and what evidence would prove it?
-   - If 49+ private is real: the shortest credible Kaggle-legal recipe.
-   - If no: top 3 private-LB score-push experiments, ordered by expected hidden/private gain.
+   - Executive verdict: what is the likely mechanism class behind the live 49.17?
+   - Score identity verdict: what do 30.12/30.14 and 49.17 measure, and what evidence would prove final-private transfer?
+   - If the 49.17 recipe is public/reproducible: the shortest credible Kaggle-legal implementation path.
+   - If no public recipe exists: top 3 reverse-engineering hypotheses and top 3 score-push experiments, ordered by expected live-LB and private-transfer gain.
    - A table of knobs with expected gain, runtime cost, implementation complexity, and leakage risk.
    - A concrete next notebook/data patch plan.
    - A stop/go ladder: what to run first, what to bank as null, and when to stop local knob-spinning.
