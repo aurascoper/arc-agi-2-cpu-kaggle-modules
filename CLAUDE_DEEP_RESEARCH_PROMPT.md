@@ -51,7 +51,7 @@ Your task:
    - A concrete next notebook patch plan.
 
 Links/artifacts I can provide:
-- Public CPU baseline repo: <PASTE_GITHUB_REPO_URL_HERE>
+- Public CPU baseline repo: https://github.com/aurascoper/arc-agi-2-cpu-kaggle-modules
 - Current TTT notebooks:
   - ARC_2026D baseline/dynamic-safe notebook
   - AB1 max_score=0.15 notebook
@@ -59,4 +59,3 @@ Links/artifacts I can provide:
 
 Do not ask me to upload my private full workspace. Ask only for the specific notebook cells or public artifacts you need.
 ```
-
