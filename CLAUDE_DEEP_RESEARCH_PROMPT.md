@@ -6,7 +6,7 @@ Use this prompt in Claude.ai with Deep Research enabled.
 You are helping me improve an ARC-AGI-2 Kaggle submission. I want an evidence-grounded plan for leaderboard progress under Kaggle L4x4 GPU constraints. A current live Kaggle leaderboard row reports first place at 49.17 (`nvbanana`, 2026-06-04), so the key question is no longer whether a 49+ live score exists. The key question is what mechanism produced it, whether it is public/reproducible/Kaggle-legal, and whether it is likely to transfer to final private scoring.
 
 Context and constraints:
-- Current known working transfer baseline: ARC_2026D-style Qwen test-time training (TTT), reported score 30.14.
+- User-attested live-LB baseline: `/Users/aurascoper/Downloads/arc-2026d(1).ipynb`, an ARC_2026D-style Qwen test-time-training (TTT) notebook, scored 30.12/30.14 live LB. Treat this as a real reported result, but do not treat it as an owned reproducible baseline until it is bound to a Kaggle row/screenshot/export or re-submitted cleanly.
 - Crucial score-identity distinction: 30.14/30.12 and 49.17 are live Kaggle leaderboard scores unless proven otherwise. The 2025 ARC-AGI-2 final private record was about 24% (NVARC), while the 2026 live leaderboard can be much higher. Do not conflate live public/semi-private LB with final private score.
 - Known hard facts to verify from primary sources:
   - the ARC Prize 2025 technical report says the top ARC-AGI-2 private score reached 24%;
@@ -26,7 +26,7 @@ Known ARC_2026D/Qwen-TTT mechanism:
 - Current caution: multi-seed TTT ensembling is probably low ROI under 12h; do not recommend it ahead of data/SFT, selection/voting, decode speedups, or LoRA right-sizing unless you have concrete evidence.
 
 Your task:
-1. Stage 0: explain how Kaggle/ARC Prize reporting splits live public/semi-private and final private scores in 2025-2026. State what can and cannot be inferred from a live 49.17 score.
+1. Gate -1 / Stage 0: explain how to bind the user-attested 30.12/30.14 ARC_2026D notebook score to a reproducible owned baseline, then explain how Kaggle/ARC Prize reporting splits live public/semi-private and final private scores in 2025-2026. State what can and cannot be inferred from a live 49.17 score.
 2. Deep-research the current public ARC-AGI-2 / ARC Prize 2025-2026 state of the art, especially Kaggle-legal notebooks/writeups and any discussion, code, dataset, or kernel tied to `nvbanana` or the 49.17 live score.
 3. Identify whether the 49.17 live score has a public/reproducible recipe. If yes, reverse-engineer the mechanism: base model, synthetic data, TTT recipe, decoding, ensembling, runtime budget, and packaging. If no, say what evidence is missing and what can still be inferred from neighboring public solutions.
 4. Distinguish live-LB gain from final-private gain. If 49.17 is only live/semi-private evidence, estimate private-transfer risk and the likely failure modes.
