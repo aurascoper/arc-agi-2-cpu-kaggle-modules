@@ -13,6 +13,7 @@ Context and constraints:
   - the ARC Prize 2025 technical report says the top ARC-AGI-2 private score reached 24%;
   - the official ARC Prize 2025 page lists NVARC at 24.0% on ARC-AGI-2 Private Evaluation;
   - current Kaggle live leaderboard shows `nvbanana` at 49.17 as of 2026-06-04.
+- New Codex Track-B finding to falsify: exact searches found no obvious public `nvbanana` Kaggle notebook/dataset/model or GitHub repo, but arXiv:2603.20334 ("Procedural Refinement by LLM-driven Algorithmic Debugging for ARC-AGI-2") independently reports `49.17%` for Gemini-3-Flash self-correction and `56.67%` for ABPR. Decide whether this exact-number collision is a mechanism clue, coincidence, or a non-Kaggle-legal frontier/API path.
 - Hardware target: Kaggle L4x4, 12-hour notebook limit, no internet during rerun except attached datasets/models.
 - CPU symbolic engine is a dead end for leading score. It emitted 259 non-default hidden predictions with 0 errors but scored 0.00 hidden. Diagnose it as public-eval overfit / non-transfer, not a compute problem.
 - Do not propose hidden-label leakage, public-eval task memorization, task-ID lookup, or competition-rule violations.
@@ -29,9 +30,10 @@ Known ARC_2026D/Qwen-TTT mechanism:
 Your task:
 1. Gate -1 / Stage 0: explain how to bind the user-attested 30.12/30.14 ARC_2026D notebook score to a reproducible owned baseline, then explain how Kaggle/ARC Prize reporting splits live public/semi-private and final private scores in 2025-2026. State what can and cannot be inferred from a live 49.17 score.
 2. Deep-research the current public ARC-AGI-2 / ARC Prize 2025-2026 state of the art, especially Kaggle-legal notebooks/writeups and any discussion, code, dataset, or kernel tied to `nvbanana` or the 49.17 live score.
-3. Identify whether the 49.17 live score has a public/reproducible recipe. If yes, reverse-engineer the mechanism: base model, synthetic data, TTT recipe, decoding, ensembling, runtime budget, and packaging. If no, say what evidence is missing and what can still be inferred from neighboring public solutions.
-4. Distinguish live-LB gain from final-private gain. If 49.17 is only live/semi-private evidence, estimate private-transfer risk and the likely failure modes.
-5. Prioritize interventions by expected private-LB gain per L4x4 runtime risk:
+3. Separately test three hypotheses for the `49.17` survivor: (a) unreleased NVARC/ARC_2026D lineage with stronger data/SFT + selection/decode, (b) ABPR/procedural-refinement/self-correction family related to arXiv:2603.20334, or (c) no public artifact/unreleased private notebook. Be explicit about which evidence supports or refutes each.
+4. Identify whether the 49.17 live score has a public/reproducible recipe. If yes, reverse-engineer the mechanism: base model, synthetic data, TTT recipe, decoding, ensembling, runtime budget, and packaging. If no, say what evidence is missing and what can still be inferred from neighboring public solutions.
+5. Distinguish live-LB gain from final-private gain. If 49.17 is only live/semi-private evidence, estimate private-transfer risk and the likely failure modes.
+6. Prioritize interventions by expected private-LB gain per L4x4 runtime risk:
    - NVARC/open synthetic-data SFT and base checkpoint
    - product-of-experts / AIRV-style selection and eval augmentation
    - speculative decoding, prefix/KV caching, and only then lower DFS cutoff
@@ -40,19 +42,19 @@ Your task:
    - constrained decoding/beam/cutoff
    - final attempt selection/voting
    - multi-seed TTT ensembling only if runtime headroom remains
-6. Produce a concrete Kaggle implementation plan:
+7. Produce a concrete Kaggle implementation plan:
    - exact model/dataset artifacts to attach or create
    - exact notebook code edits
    - env knobs/defaults
    - expected runtime on L4x4
    - failure modes and how to detect them in logs
    - A/B ladder with stop/go gates
-7. Be adversarial about claims. Distinguish:
+8. Be adversarial about claims. Distinguish:
    - hidden-LB evidence
    - public-eval/local evidence
    - speculation
    - contamination/leakage risk
-8. Final output format:
+9. Final output format:
    - Executive verdict: what is the likely mechanism class behind the live 49.17?
    - Score identity verdict: what do 30.12/30.14 and 49.17 measure, and what evidence would prove final-private transfer?
    - If the 49.17 recipe is public/reproducible: the shortest credible Kaggle-legal implementation path.
