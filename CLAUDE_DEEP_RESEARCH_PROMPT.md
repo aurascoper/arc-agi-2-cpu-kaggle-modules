@@ -7,6 +7,7 @@ You are helping me improve an ARC-AGI-2 Kaggle submission. I want an evidence-gr
 
 Context and constraints:
 - User-attested live-LB baseline: `/Users/aurascoper/Downloads/arc-2026d(1).ipynb`, an ARC_2026D-style Qwen test-time-training (TTT) notebook, scored 30.12/30.14 live LB. Treat this as a real reported result, but do not treat it as an owned reproducible baseline until it is bound to a Kaggle row/screenshot/export or re-submitted cleanly.
+- Reload-score landmine: the notebook PRINTS a local reload/eval score (~37.67, `*** Reload score: 37.667`). That is a public-eval reload, NOT a Kaggle LB row — the same inflation class as the CPU 0.72-local -> 0.00-hidden collapse. Do not treat 37.67 as the baseline or as evidence of transfer; only a submitted Kaggle leaderboard row counts.
 - Crucial score-identity distinction: 30.14/30.12 and 49.17 are live Kaggle leaderboard scores unless proven otherwise. The 2025 ARC-AGI-2 final private record was about 24% (NVARC), while the 2026 live leaderboard can be much higher. Do not conflate live public/semi-private LB with final private score.
 - Known hard facts to verify from primary sources:
   - the ARC Prize 2025 technical report says the top ARC-AGI-2 private score reached 24%;
